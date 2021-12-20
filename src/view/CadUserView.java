@@ -4,6 +4,11 @@
  */
 package view;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import util.UsuarioConexao;
+
 /**
  *
  * @author simoe
@@ -60,8 +65,18 @@ public class CadUserView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -72,7 +87,7 @@ public class CadUserView extends javax.swing.JFrame {
 
         btnExcluir.setText("Excluir");
 
-        nameUser.setText("Código do Usuário:");
+        nameUser.setText("Cód do Usuário:");
 
         txtCodUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,7 +110,7 @@ public class CadUserView extends javax.swing.JFrame {
 
         jLabel4.setText("Companhia Aérea");
 
-        cbCompAerea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCompAerea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "teste teste teste, teste1 teste1", "teste20" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -171,13 +186,38 @@ public class CadUserView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        String nomeUsuario, usuario, senha;
-        
-        nomeUsuario = txtNomeUsuario.getText();
-        usuario = txtUsuario.getText();
-        senha = txtSenha.getText();
+        try{
+            UsuarioConexao objUsuarioConexao = new UsuarioConexao();
+            ResultSet rsUsuarioConexao = objUsuarioConexao.buscaUltimoUsuario();
+            if(rsUsuarioConexao.next()){
+                alteraBotoes(false,false,true,true);
+                limpaCampos();
+                txtCodUsuario.setText(rsUsuarioConexao.getString("lastCod"));
+                txtCodUsuario.setEnabled(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "Erro ao criar novo usuário!");
+            }
+        }catch(SQLException erro){
+            JOptionPane.showMessageDialog(null, "CadUserView: " + erro);
+        } 
     }//GEN-LAST:event_btnNovoActionPerformed
-
+    
+    public void alteraBotoes(boolean novo,boolean excluir,boolean cancelar,boolean salvar){
+        btnNovo.setEnabled(novo);
+        btnCancelar.setEnabled(cancelar);
+        btnSalvar.setEnabled(salvar);
+        btnExcluir.setEnabled(excluir);
+    }
+    
+    public void limpaCampos(){
+        txtCodUsuario.setText("");
+        txtNomeUsuario.setText("");
+        txtUsuario.setText("");
+        txtSenha.setText("");
+    }
+    
+    
+    
     private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProcurarActionPerformed
@@ -185,6 +225,21 @@ public class CadUserView extends javax.swing.JFrame {
     private void txtCodUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodUsuarioActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        String nomeUsuario, usuario, senha, compAerea;
+        
+        alteraBotoes(false,false,true,true);
+        
+        nomeUsuario = txtNomeUsuario.getText();
+        usuario = txtUsuario.getText();
+        senha = txtSenha.getText();
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpaCampos();
+        alteraBotoes(true,false,false,false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments

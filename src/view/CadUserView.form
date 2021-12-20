@@ -132,11 +132,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSalvar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Salvar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnNovo">
       <Properties>
@@ -153,7 +159,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="nameUser">
       <Properties>
-        <Property name="text" type="java.lang.String" value="C&#xf3;digo do Usu&#xe1;rio:"/>
+        <Property name="text" type="java.lang.String" value="C&#xf3;d do Usu&#xe1;rio:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCodUsuario">
@@ -198,11 +204,9 @@
     <Component class="javax.swing.JComboBox" name="cbCompAerea">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
+          <StringArray count="2">
+            <StringItem index="0" value="teste teste teste, teste1 teste1"/>
+            <StringItem index="1" value="teste20"/>
           </StringArray>
         </Property>
       </Properties>

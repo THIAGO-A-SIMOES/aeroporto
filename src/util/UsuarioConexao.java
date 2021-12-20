@@ -30,5 +30,25 @@ public class UsuarioConexao {
             return null;
         }
     }
+    
+    public ResultSet buscaUltimoUsuario(){
+        con = new Conexao().conectar();
+        try {
+            String sql = "select count(iduser)+1 as lastCod from users";
+            PreparedStatement pstm = con.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+            
+            return rs;
+        }catch (SQLException erro){
+            JOptionPane.showMessageDialog(null, "UsuarioConexao: " + erro);
+            return null;
+        }
+    }
+    
+    public ResultSet cadastraUsuario(String nomeUsuario, String usuario, String senha, String compAerea){
+        return null;
+    }
+    
+    
 
 }
