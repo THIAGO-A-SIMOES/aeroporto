@@ -45,7 +45,14 @@ public class UsuarioConexao {
         }
     }
     
-    public ResultSet cadastraUsuario(String nomeUsuario, String usuario, String senha, String compAerea){
+    public ResultSet cadastraUsuario( int idLogin, String nomeUsuario, String usuario, String senha, String compAerea){
+        LoginModel Usuario = new LoginModel();
+        
+        Usuario.setIdLogin(idLogin);
+        Usuario.setNameUser(nomeUsuario);
+        Usuario.setUser(usuario);
+        Usuario.setPassword(senha);
+        
         return null;
     }
     
