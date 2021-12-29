@@ -80,12 +80,12 @@ public class CadUserView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtSenha = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cbCompAerea = new javax.swing.JComboBox<>();
         chkSituacao = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         cbPerfilUsuario = new javax.swing.JComboBox<>();
+        txtSenha = new javax.swing.JPasswordField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -203,9 +203,9 @@ public class CadUserView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cbPerfilUsuario, 0, 314, Short.MAX_VALUE)
                             .addComponent(cbCompAerea, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(txtNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtSenha)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +225,7 @@ public class CadUserView extends javax.swing.JFrame {
                         .addComponent(nameUser)
                         .addComponent(txtCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnProcurar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -235,8 +235,8 @@ public class CadUserView extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbCompAerea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -525,7 +525,7 @@ public class CadUserView extends javax.swing.JFrame {
     private javax.swing.JLabel nameUser;
     private javax.swing.JTextField txtCodUsuario;
     private javax.swing.JTextField txtNomeUsuario;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
