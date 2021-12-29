@@ -6,6 +6,9 @@ public class LoginModel {
     private String user;
     private String password;
     private String nameUser;
+    private int situacao;
+    private int perfilUsuario;
+    private int compAerea;
 
     public int getIdLogin() {
         return idLogin;
@@ -37,6 +40,48 @@ public class LoginModel {
 
     public void setNameUser(String nameUser) {
         this.nameUser = nameUser;
+    }
+
+    /**
+     * @return the situacao
+     */
+    public int getSituacao() {
+        return situacao;
+    }
+
+    /**
+     * @param situacao the situacao to set
+     */
+    public void setSituacao(int situacao) {
+        this.situacao = situacao;
+    }
+
+    /**
+     * @return the perfilUsuario
+     */
+    public int getPerfilUsuario() {
+        return perfilUsuario;
+    }
+
+    /**
+     * @param perfilUsuario the perfilUsuario to set
+     */
+    public void setPerfilUsuario(int perfilUsuario) {
+        this.perfilUsuario = perfilUsuario;
+    }
+
+    /**
+     * @return the compAerea
+     */
+    public int getCompAerea() {
+        return compAerea;
+    }
+
+    /**
+     * @param compAerea the compAerea to set
+     */
+    public void setCompAerea(int compAerea) {
+        this.compAerea = compAerea;
     }
     
     

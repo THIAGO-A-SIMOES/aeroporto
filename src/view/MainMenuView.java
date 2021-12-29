@@ -4,6 +4,10 @@
  */
 package view;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author simoe
@@ -148,7 +152,12 @@ public class MainMenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        CadUserView objCadUserView = new CadUserView();
+        CadUserView objCadUserView = null;
+        try {
+            objCadUserView = new CadUserView();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenuView.class.getName()).log(Level.SEVERE, null, ex);
+        }
         objCadUserView.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 

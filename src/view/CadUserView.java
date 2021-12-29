@@ -7,7 +7,13 @@ package view;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import util.UsuarioConexao;
+import model.LoginModel;
+import controller.UsuarioController;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -18,8 +24,37 @@ public class CadUserView extends javax.swing.JFrame {
     /**
      * Creates new form CadUserView
      */
-    public CadUserView() {
+    public CadUserView() throws SQLException {
         initComponents();
+        
+        limpaCampos();
+        alteraBotoes(true,false,false,false);
+        txtCodUsuario.setEnabled(true);
+        txtNomeUsuario.setEnabled(false);
+        txtUsuario.setEnabled(false);
+        txtSenha.setEnabled(false);
+        cbCompAerea.setEnabled(false);
+        cbPerfilUsuario.setEnabled(false);
+        chkSituacao.setEnabled(false);
+        
+        UsuarioController cac = new UsuarioController();
+        
+        List<String> listCompAerea = new ArrayList<>();
+        List<String> listPerfilUsuario = new ArrayList<>();
+        
+        listPerfilUsuario.add("Administrador");
+        listPerfilUsuario.add("Comum");
+        listPerfilUsuario.add("Supervisor");
+
+        
+        cac.buscaCompAerea(listCompAerea);
+        
+        DefaultComboBoxModel companiaaerea = new DefaultComboBoxModel(listCompAerea.toArray());
+        cbCompAerea.setModel(companiaaerea);
+        
+        DefaultComboBoxModel perfilusuario = new DefaultComboBoxModel(listPerfilUsuario.toArray());
+        cbPerfilUsuario.setModel(perfilusuario);
+        
     }
 
     /**
@@ -50,7 +85,7 @@ public class CadUserView extends javax.swing.JFrame {
         cbCompAerea = new javax.swing.JComboBox<>();
         chkSituacao = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbPerfilUsuario = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,9 +128,19 @@ public class CadUserView extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         nameUser.setText("Cód do Usuário:");
 
+        txtCodUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCodUsuarioFocusLost(evt);
+            }
+        });
         txtCodUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodUsuarioActionPerformed(evt);
@@ -103,6 +148,11 @@ public class CadUserView extends javax.swing.JFrame {
         });
 
         btnProcurar.setText("Procurar");
+        btnProcurar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProcurarMouseClicked(evt);
+            }
+        });
         btnProcurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProcurarActionPerformed(evt);
@@ -126,56 +176,55 @@ public class CadUserView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(nameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnProcurar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(chkSituacao))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabel1))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbPerfilUsuario, 0, 314, Short.MAX_VALUE)
+                            .addComponent(cbCompAerea, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addContainerGap()
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)
-                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(30, 30, 30)
-                            .addComponent(nameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtCodUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnProcurar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(chkSituacao))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(30, 30, 30)
-                                    .addComponent(jLabel1))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jComboBox1, 0, 314, Short.MAX_VALUE)
-                                .addComponent(cbCompAerea, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING)))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameUser)
-                    .addComponent(txtCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chkSituacao)
-                    .addComponent(btnProcurar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(nameUser)
+                        .addComponent(txtCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnProcurar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,14 +243,14 @@ public class CadUserView extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbPerfilUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25))
         );
 
@@ -211,7 +260,18 @@ public class CadUserView extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         try{
-            UsuarioConexao objUsuarioConexao = new UsuarioConexao();
+            
+            limpaCampos();
+            alteraBotoes(false,true,true,false);
+            txtCodUsuario.setEnabled(false);
+            txtNomeUsuario.setEnabled(true);
+            txtUsuario.setEnabled(true);
+            txtSenha.setEnabled(true);
+            cbCompAerea.setEnabled(true);
+            cbPerfilUsuario.setEnabled(true);
+            chkSituacao.setEnabled(true);
+        
+            UsuarioController objUsuarioConexao = new UsuarioController();
             ResultSet rsUsuarioConexao = objUsuarioConexao.buscaUltimoUsuario();
             if(rsUsuarioConexao.next()){
                 alteraBotoes(false,false,true,true);
@@ -243,7 +303,7 @@ public class CadUserView extends javax.swing.JFrame {
     
     
     private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnProcurarActionPerformed
 
     private void txtCodUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodUsuarioActionPerformed
@@ -251,22 +311,161 @@ public class CadUserView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCodUsuarioActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        String nomeUsuario, usuario, senha, compAerea, idUsuario, CompAerea;
+        int status;
+        
+        if (txtCodUsuario.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Informe o Código de Usuário!");
+            return;
+        }
+        
+        if (txtNomeUsuario.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Informe o Nome do Usuário!");
+            return;
+        }
+        
+        if (txtUsuario.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Informe o Usuário!");
+            return;
+        }
+        
+        if (txtSenha.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Informe a Senha!");
+            return;
+        }
+        
+        if (cbCompAerea.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(null, "Informe a Companhia Aérea!");
+            return;
+        }
+        
+        if (cbPerfilUsuario.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(null, "Informe o Tipo do Perfil de Usuário!");
+            return;
+        }
+
         
         alteraBotoes(false,false,true,true);
         
-        nomeUsuario = txtNomeUsuario.getText();
-        usuario = txtUsuario.getText();
-        senha = txtSenha.getText();
-        idUsuario = txtCodUsuario.getText();
-        CompAerea = cbCompAerea.getItemAt(cbCompAerea.getSelectedIndex());
+        LoginModel Usuario = new LoginModel();
+        
+        Usuario.setIdLogin(Integer.parseInt(txtCodUsuario.getText()));
+        Usuario.setNameUser(txtNomeUsuario.getText());
+        Usuario.setPassword(txtSenha.getText());
+        Usuario.setPerfilUsuario(cbPerfilUsuario.getSelectedIndex());
+        Usuario.setUser(txtUsuario.getText());
+        Usuario.setCompAerea(cbCompAerea.getSelectedIndex());
+        if (chkSituacao.isEnabled()) {
+            status = 1;
+        } else {
+            status = 0;
+        }  
+        Usuario.setSituacao(status);
+        
+        UsuarioController controle = new UsuarioController();
+        
+        if(controle.cadastraUsuario(Usuario)){
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado!");
+            limpaCampos();
+            alteraBotoes(true,false,false,false);
+            txtCodUsuario.setEnabled(true);
+            txtNomeUsuario.setEnabled(false);
+            txtUsuario.setEnabled(false);
+            txtSenha.setEnabled(false);
+            cbCompAerea.setEnabled(false);
+            cbPerfilUsuario.setEnabled(false);
+            chkSituacao.setEnabled(false);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar!");
+        }
+        
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpaCampos();
         alteraBotoes(true,false,false,false);
+        txtCodUsuario.setEnabled(true);
+        txtNomeUsuario.setEnabled(true);
+        txtUsuario.setEnabled(true);
+        txtSenha.setEnabled(true);
+        cbCompAerea.setEnabled(true);
+        cbPerfilUsuario.setEnabled(true);
+        chkSituacao.setEnabled(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtCodUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodUsuarioFocusLost
+        
+        UsuarioController controle = new UsuarioController();
+        
+        
+       
+        if (!txtCodUsuario.getText().isEmpty()){
+            try {
+                ResultSet rs = controle.buscaUsuario(Integer.parseInt(txtCodUsuario.getText()));
+                if(rs.next()){
+                    txtCodUsuario.setText(rs.getString("idUser"));
+                    if (rs.getString("situacao") == "1"){
+                        chkSituacao.setSelected(true);
+                    }else{
+                        chkSituacao.setSelected(false);
+                    }
+                    txtNomeUsuario.setText(rs.getString("nameuser"));
+                    txtUsuario.setText(rs.getString("user"));
+                    txtSenha.setText(rs.getString("password"));
+                    cbCompAerea.setSelectedIndex(rs.getInt("compAerea"));
+                    cbPerfilUsuario.setSelectedIndex(rs.getInt("perfil"));
+
+                    alteraBotoes(false,true,true,true);
+                    txtCodUsuario.setEnabled(true);
+                    txtNomeUsuario.setEnabled(true);
+                    txtUsuario.setEnabled(true);
+                    txtSenha.setEnabled(true);
+                    cbCompAerea.setEnabled(true);
+                    cbPerfilUsuario.setEnabled(true);
+                    chkSituacao.setEnabled(true);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Usuário não encontrado!");
+                    txtCodUsuario.setText("");
+                    txtNomeUsuario.setText("");
+                    txtUsuario.setText("");
+                    txtSenha.setText("");
+                    cbCompAerea.setSelectedIndex(-1);
+                    cbPerfilUsuario.setSelectedIndex(-1);
+                    chkSituacao.setSelected(false);
+                    txtCodUsuario.setFocusable(true);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao pesquisar usuário!");
+            }
+        }else{
+            return;
+        }
+    }//GEN-LAST:event_txtCodUsuarioFocusLost
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        
+        UsuarioController controle = new UsuarioController();
+        
+        if(controle.excluiUsuario(Integer.parseInt(txtCodUsuario.getText()))){
+            JOptionPane.showMessageDialog(null, "Usuário excluido!");
+            limpaCampos();
+            alteraBotoes(true,false,false,false);
+            txtCodUsuario.setEnabled(true);
+            txtNomeUsuario.setEnabled(true);
+            txtUsuario.setEnabled(true);
+            txtSenha.setEnabled(true);
+            cbCompAerea.setEnabled(true);
+            cbPerfilUsuario.setEnabled(true);
+            chkSituacao.setEnabled(true);
+        } else{
+            JOptionPane.showMessageDialog(this, "Erro ao excluir!");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnProcurarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProcurarMouseClicked
+
+    }//GEN-LAST:event_btnProcurarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -298,7 +497,11 @@ public class CadUserView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadUserView().setVisible(true);
+                try {
+                    new CadUserView().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CadUserView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -310,8 +513,8 @@ public class CadUserView extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnProcurar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbCompAerea;
+    private javax.swing.JComboBox<String> cbPerfilUsuario;
     private javax.swing.JCheckBox chkSituacao;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

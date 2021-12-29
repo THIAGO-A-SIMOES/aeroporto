@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.LoginModel;
-import util.UsuarioConexao;
+import controller.UsuarioController;
 
 
 
@@ -136,7 +136,7 @@ public class LoginView extends javax.swing.JFrame {
             objLoginModel.setUser(user);
             objLoginModel.setPassword(password);
             
-            UsuarioConexao objUsuarioConexao = new UsuarioConexao();
+            UsuarioController objUsuarioConexao = new UsuarioController();
             ResultSet rsUsuarioConexao = objUsuarioConexao.autenticaUsuario(objLoginModel);
             
             if(rsUsuarioConexao.next()){
