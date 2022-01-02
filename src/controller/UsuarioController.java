@@ -36,7 +36,7 @@ public class UsuarioController {
     public ResultSet buscaUltimoUsuario(){
         con = new Conexao().conectar();
         try {
-            String sql = "select count(iduser)+1 as lastCod from users";
+            String sql = "select max(iduser)+1 as lastCod from users";
             PreparedStatement pstm = con.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
             
