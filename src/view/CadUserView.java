@@ -262,7 +262,8 @@ public class CadUserView extends javax.swing.JFrame {
         try{
             
             limpaCampos();
-            alteraBotoes(false,true,true,false);
+            alteraBotoes(false,true,true,true);
+            btnProcurar.setEnabled(false);
             txtCodUsuario.setEnabled(false);
             txtNomeUsuario.setEnabled(true);
             txtUsuario.setEnabled(true);
@@ -274,8 +275,6 @@ public class CadUserView extends javax.swing.JFrame {
             UsuarioController objUsuarioConexao = new UsuarioController();
             ResultSet rsUsuarioConexao = objUsuarioConexao.buscaUltimoUsuario();
             if(rsUsuarioConexao.next()){
-                alteraBotoes(false,false,true,true);
-                limpaCampos();
                 txtCodUsuario.setText(rsUsuarioConexao.getString("lastCod"));
                 txtCodUsuario.setEnabled(false);
             }else{
@@ -354,7 +353,7 @@ public class CadUserView extends javax.swing.JFrame {
         Usuario.setPerfilUsuario(cbPerfilUsuario.getSelectedIndex());
         Usuario.setUser(txtUsuario.getText());
         Usuario.setCompAerea(cbCompAerea.getSelectedIndex());
-        if (chkSituacao.isEnabled()) {
+        if (chkSituacao.isSelected()) {
             status = 1;
         } else {
             status = 0;
@@ -386,12 +385,12 @@ public class CadUserView extends javax.swing.JFrame {
         limpaCampos();
         alteraBotoes(true,false,false,false);
         txtCodUsuario.setEnabled(true);
-        txtNomeUsuario.setEnabled(true);
-        txtUsuario.setEnabled(true);
-        txtSenha.setEnabled(true);
-        cbCompAerea.setEnabled(true);
-        cbPerfilUsuario.setEnabled(true);
-        chkSituacao.setEnabled(true);
+        txtNomeUsuario.setEnabled(false);
+        txtUsuario.setEnabled(false);
+        txtSenha.setEnabled(false);
+        cbCompAerea.setEnabled(false);
+        cbPerfilUsuario.setEnabled(false);
+        chkSituacao.setEnabled(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtCodUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodUsuarioFocusLost
